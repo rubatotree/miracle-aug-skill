@@ -1,0 +1,4 @@
+interface:
+  display_name: "MiracleAug"
+  short_description: "Reconstruct robot demos and build task-valid datasets"
+  default_prompt: "Use $miracleaug to reconstruct my demonstration in Blender and generate a validated augmented robot dataset."

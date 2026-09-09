@@ -1,0 +1,184 @@
+{
+  "schema": "miracleaug_showcase_release_v1",
+  "visual_review_passed": true,
+  "visual_review": "Inspected the three final composed images: geometry, captions, renderer pairing and opaque exterior replacement are consistent. The release includes only these listed images, not every diagnostic frame.",
+  "redaction_requested": true,
+  "source_pixels_removed": true,
+  "source_scene_sha256": "3214d9bfec2cb90192af00a4467caa9df0765baf005fa9a93f89b7c59c2c95ba",
+  "description": "Actual sparse renders of the final reconstructed scene; not a complete dataset release. No source photographs, scene file or private credentials included.",
+  "files": {
+    "overview.jpg": "5158daa567ceec3602ebfe0432285cbc88aa4b0896705ad0597ba85ddadf4859",
+    "renderer-comparison.jpg": "6e0c059584b397962b2d8a6ece29bf625d04921f43131261b5f155b1e6ac3ffa",
+    "task-sequence.jpg": "58a76426c7bf91b39c3a501364bcfaeb158f992e8b326c83e4e320833348517f"
+  },
+  "renders": [
+    {
+      "case": "Reconstructed scene",
+      "engine": "CYCLES",
+      "samples": 128,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "df2578d6008d41f1408bcc46f0c2f90770b03d64ba3188205028f7c4f316570f",
+        "240": "ac0904e0698e7188cb7b3dd405acfd7658b43ec12a71c4a4d7380b7cbe2d258d",
+        "427": "5cc8388073944fd4fa43ac9231e0672a30ca0d3e574c06cc267b4d4ab0905fbc"
+      }
+    },
+    {
+      "case": "Reverse view",
+      "engine": "CYCLES",
+      "samples": 128,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "ada1b92b7f91ee28b4eb8783ebf020528c6fbb02f1bf7f1cde0c0d84bd4acfd8",
+        "240": "c8acf5cac4944be0f1d7da73b78c1e81ddb08add9b63538db9027dd6592a8361",
+        "427": "4be1cae3a6cb923610ba4a756af3e6883d8984a629fdab31312e85f68f04019b"
+      }
+    },
+    {
+      "case": "Glass material",
+      "engine": "CYCLES",
+      "samples": 128,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "2aaa1a9e0d9396c098b1fed6f1f91069799186e120a02c34282d48d6332a2876",
+        "240": "2f1beb5b1ca5e06cb3e792f680c10dd60713bb2388f4d765110909f50e13625a",
+        "427": "73f6cdabf138dd45b512348dd06aa2d6137e5a68ae20f3bc823aa843a526ef44"
+      }
+    },
+    {
+      "case": "Alternate toy",
+      "engine": "CYCLES",
+      "samples": 128,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "9d675ab99edc89d28d0e0858a187be63d82b3be8505e1888d9ff97d6156de357",
+        "240": "9615972e9c7523bbb2b7b564c3e36c47e47ae2716cbd761289ee7d048a35cf3a",
+        "427": "4c35b79ad647a8c3e55af41573dd9d6ddb427de463fc635689ffb61311542893"
+      }
+    },
+    {
+      "case": "Colored lighting",
+      "engine": "CYCLES",
+      "samples": 128,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "037ee0ed95195f66ef30ef9a8c75109d81679d29fd6c8841b3118dd43d60ce16",
+        "240": "fe40e86f14b6bd4956d509d6bc3bb0ea6e05b1725d05fd9576d792f32902f263",
+        "427": "b34c08fe8c4af724f698b1d1c0bb4145ef98def5587fb7872ce3a36ef77cda43"
+      }
+    },
+    {
+      "case": "Metal material",
+      "engine": "CYCLES",
+      "samples": 128,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "f692938f5b5b119236e806f8bb09a123c755213bc7648a7ffe90b1e885ff63e6",
+        "240": "488a969ce9ce67c4ffa84a6eaf57ea2475212d95e41b6935d808ac1712c509df",
+        "427": "c3138bda6bd4e196b9bbe2edce9edc7699d006150d16f6e66002636c0dd01766"
+      }
+    },
+    {
+      "case": "Eevee scene",
+      "engine": "BLENDER_EEVEE",
+      "samples": 64,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "6a9b58a77ddf5c68d5525f552461ea9a0240eb028b4ba51f2892fd35b9beffe9",
+        "240": "c7b834dedcef33e5555a20826fc84e7fb7ac84c6313de61f0ad1ec07ba87e20c",
+        "427": "2a800550a35607606f4a63a4c7c8a92d5f7e0777ae0d2b2a12de33a328ac719c"
+      }
+    },
+    {
+      "case": "Eevee colored lighting",
+      "engine": "BLENDER_EEVEE",
+      "samples": 64,
+      "geometry_passed": true,
+      "visibility_passed": true,
+      "resolution": [
+        640,
+        480
+      ],
+      "frames": [
+        0,
+        240,
+        427
+      ],
+      "rendered_png_sha256": {
+        "0": "d2ebae8d9b4907043194fbcb467e5a17ffaa0bc9674d3edd2c0fb4d2f0775075",
+        "240": "09c5a663bc7617020dae51fe520b72be1cf87fd8b4b49fdd5a676e2cf374ddab",
+        "427": "25c6a07faa682fc13e7dd80abec0699bac36ab7b8d3f12fddd564fa753dcaa69"
+      }
+    }
+  ]
+}

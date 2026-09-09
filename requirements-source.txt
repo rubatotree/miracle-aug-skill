@@ -1,0 +1,3 @@
+# Optional only for source_episode.py; pin resolved versions in each generated project.
+huggingface_hub>=0.35
+pyarrow>=18
