@@ -84,6 +84,29 @@ You can request reconstruction only. To redact a scene, add an explicit instruct
 such as “pixelate the exterior before rendering or sharing.” Otherwise no redaction
 is performed. The agent inspects available metadata before asking for missing inputs.
 
+## Citation
+
+If you use MiracleAug in your research, please cite the version you used. The fixed
+release below is **v0.1.3**, published on September 10, 2026:
+
+> Zhu, Y. (2026). *MiracleAug* (Version 0.1.3) [Computer software]. GitHub.
+> https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3
+
+```bibtex
+@software{zhu2026miracleaug,
+  author  = {Zhu, Yutian},
+  title   = {{MiracleAug}},
+  year    = {2026},
+  date    = {2026-09-10},
+  version = {0.1.3},
+  url     = {https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3}
+}
+```
+
+Download [CITATION.bib](CITATION.bib), or use GitHub's **Cite this repository** entry
+generated from [CITATION.cff](CITATION.cff). To reproduce this release, check out the
+`v0.1.3` tag. Its identifier is the versioned GitHub URL; no DOI has been assigned.
+
 ## Tools and verification
 
 The package includes a selected-episode reader, a finite quota/evidence ledger, a

@@ -67,6 +67,29 @@ git clone https://github.com/rubatotree/miracle-aug-skill.git ~/.codex/skills/mi
 “渲染或分享前对窗外打码”等要求；否则不会执行脱敏。模型会先检查现有信息，再询问
 必要的缺项。
 
+## 引用
+
+如果在研究中使用 MiracleAug，请引用实际使用的版本。以下引用固定指向
+**v0.1.3**，发布日期为 2026 年 9 月 10 日：
+
+> Zhu, Y. (2026). *MiracleAug* (Version 0.1.3) [Computer software]. GitHub.
+> https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3
+
+```bibtex
+@software{zhu2026miracleaug,
+  author  = {Zhu, Yutian},
+  title   = {{MiracleAug}},
+  year    = {2026},
+  date    = {2026-09-10},
+  version = {0.1.3},
+  url     = {https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3}
+}
+```
+
+可下载 [CITATION.bib](CITATION.bib)，或使用 GitHub 根据
+[CITATION.cff](CITATION.cff) 生成的 **Cite this repository** 入口。
+复现此版本时请检出 `v0.1.3` 标签。目前使用固定版本的 GitHub 地址作为标识，尚未分配 DOI。
+
 ## 工具与验证
 
 包内包含 episode 读取器、有限配额与证据记录工具、逐帧数据检查器、特定平台的

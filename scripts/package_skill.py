@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 import zipfile
 
-TOP_FILES = {"SKILL.md", "README.md", "README.zh-CN.md", "LICENSE", ".gitignore", ".gitattributes", "requirements-source.txt"}
+TOP_FILES = {"SKILL.md", "README.md", "README.zh-CN.md", "CITATION.cff", "CITATION.bib", "LICENSE", ".gitignore", ".gitattributes", "requirements-source.txt"}
 TOP_FOLDERS = {"agents", "references", "scripts", "tests", ".github"}
 EXTENSIONS = {".py", ".c", ".md", ".yaml", ".yml", ".txt"}
 
