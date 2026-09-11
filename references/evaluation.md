@@ -28,3 +28,15 @@ If training/evaluation is outside current authorization or compute scope, delive
 dataset coverage, validation and a concrete evaluation configuration/protocol. State
 that policy generalization remains untested. Do not launch costly training merely to
 complete an aspirational claim in the project description.
+
+For photo-only synthesis, report that no measured task demonstration was used for motion
+construction; separately disclose pretrained model weights, CAD, task-specific scene/
+solver tuning and human corrections. Do not conflate zero recorded demonstrations with
+zero prior knowledge, zero supervision, or verified zero-shot real success. The primary
+video-plus-multiview workflow retains its actual measured source lineage.
+
+Policy delivery also needs runtime correctness before task evaluation: unit/processor
+identity, sequential action continuity, latency and release behavior. Read
+[training-deployment.md](training-deployment.md) and
+[rollout-diagnostics.md](rollout-diagnostics.md). A user-reported grasp and transfer without
+release is partial progress, not a successful completed placement trial.

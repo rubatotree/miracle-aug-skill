@@ -62,3 +62,16 @@ verified receipt. A new plan requires a new project/session; edited frozen reque
 or modified evidence invalidate resume. Stochastic GPU kernels need not be byte
 identical across driver versions; reproducibility requires pinned runtime and logged
 settings, plus semantic/numerical tolerances where exact bytes are not promised.
+
+For model delivery, add equivalent adapter operations to freeze a local dataset snapshot,
+resolve train-only features, train a named official policy, validate a deployment package
+and publish a verified artifact. Keep them outside the dataset admission ledger: its
+`complete`/`seal` applies only to that dataset, not trained models or rollout success.
+Read [end-to-end.md](end-to-end.md) for the stage graph and
+[training-deployment.md](training-deployment.md) for processor/control requirements.
+
+Every candidate should identify `motion_seed_id`, motion hash, observation parameters,
+actual camera role, validation level and inherited check reports when reuse is employed.
+Boolean admission checks summarize that evidence; they do not imply a new simulation.
+The project adapter owns inference/physical validity, and lightweight receipt tools do
+not provide a universal physics oracle or visual recognition system.

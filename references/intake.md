@@ -1,5 +1,9 @@
 # Source intake and observability
 
+Prefer demonstration video or a dataset episode plus multiview photos. Preserve recorded
+motion when available and use other views to resolve the scene. The table below also
+supports missing components; it is not a list of mandatory inputs.
+
 Preserve a source manifest with dataset ID/local path, immutable revision, selected
 episode, task, license, camera keys, source hashes and extraction commands. A video
 path or camera name alone does not establish its identity: inspect frames and metadata
@@ -49,6 +53,7 @@ Input modes determine defensible outputs:
 | Video + measured joints + robot CAD | Calibrated FK reconstruction with preserved raw signals |
 | Video + known robot, no joints | Fit/synthesize motion with reprojection and kinematic checks; label inferred, retain uncertainty |
 | Video without identifiable robot/control contract | Visual reconstruction; actuator-level training labels remain unavailable until a robot mapping is supplied or explicitly chosen |
+| Photos + task + identifiable robot, no demonstration | Estimate a metric scene and synthesize task motion; no measured trajectory exists |
 | Optional orbit/images | Additional shape/appearance evidence; not extra task demonstrations |
 | Text only for hidden surroundings | Plausible completion with an explicit uncertainty mask |
 
@@ -57,3 +62,5 @@ claim measured robot demonstrations from arbitrary estimated motion. If a synthe
 control adapter is appropriate and authorized, implement it and clearly label its
 provenance. Avoid generic pick/place assumptions for pouring, pushing, opening, mobile
 navigation or bimanual tasks.
+
+For model delivery, resolve the hardware state/action units and runtime camera contract at intake. Read [training-deployment.md](training-deployment.md) before choosing a training schema. Do not wait for the first failed rollout to discover that six simulator radians are five driver angles plus one calibrated gripper percentage.

@@ -1,0 +1,3 @@
+# Optional for adapt_policy_units.py; prefer the existing pinned training environment.
+torch>=2.2
+safetensors>=0.4

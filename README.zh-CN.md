@@ -1,18 +1,19 @@
 # MiracleAug
 
-**单条示教，多样条件，保持任务一致的数据增强。**
+示教与多视角参考 → 场景重建 → 增广数据集 → 可部署模型。
 
 [English](README.md) · 简体中文
 
-MiracleAug 是一个面向 GPT-6 Astra 或具备同等及以上视觉、空间推理和编程能力模型的
-agent skill。它从一条机器人示教出发，在 Blender 中重建可编辑场景，再生成带有同步
-关节轨迹的增强示教数据。
+MiracleAug 是一个面向具备视觉、空间推理和编程能力模型的 agent skill。主要输入是
+已有示教视频／数据集 episode 与多视角照片：保留实测动作，用照片补充几何和外观，
+在 Blender 中重建可编辑场景，再生成任务一致的数据。按用户要求继续训练 ACT、
+SmolVLA，处理部署单位与两端处理器，交付模型和 rollout 命令。
 
-输入可以是视频、本地机器人数据集，或 Hugging Face 数据集与 episode 编号。多视角
-视频、图片和文字参考均可选。模型先保存可检查的场景重建中间结果，再生成指定数量
-的有效示教，验证原生数据集，并按授权准备或完成上传。
+缺少照片、关节日志或示教视频也能开始；按实际证据估计、拟合或合成缺项，并明确
+来源和不确定性。只有照片时，生成的动作是合成示教，不能称为实测动作。技能会先
+检查现有信息和环境，仅询问真正影响任务的缺项，不要求用户自行设计整个管线。
 
-## 场景重建结果
+## 早期示教重建的展示结果
 
 ![MiracleAug 的重建场景、反向视角、玻璃、替换玩具、彩色光照与金属材质](assets/showcase/overview.jpg)
 
@@ -59,7 +60,7 @@ git clone https://github.com/rubatotree/miracle-aug-skill.git ~/.codex/skills/mi
 示例请求：
 
 > 使用 $miracleaug，从 HF 的 owner/demo 中 episode 3 重建场景。
-> 这段环绕视频作为可选几何参考。保存 Blender 重建检查点后，在我的 Ubuntu GPU 服务器
+> 使用附带的多视角照片补充几何和外观。保存 Blender 重建检查点后，在我的 GPU 服务器
 > 生成 100 条通过检查的新示教，其中 20 条 Cycles、80 条 Eevee。重点增加强光照、
 > 材质和相机变化。输出 LeRobot 和关节轨迹，并上传到我指定的私有仓库。
 
@@ -67,38 +68,17 @@ git clone https://github.com/rubatotree/miracle-aug-skill.git ~/.codex/skills/mi
 “渲染或分享前对窗外打码”等要求；否则不会执行脱敏。模型会先检查现有信息，再询问
 必要的缺项。
 
-## 引用
-
-如果在研究中使用 MiracleAug，请引用实际使用的版本。以下引用固定指向
-**v0.1.3**，发布日期为 2026 年 9 月 10 日：
-
-> Zhu, Y. (2026). *MiracleAug* (Version 0.1.3) [Computer software]. GitHub.
-> https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3
-
-```bibtex
-@software{zhu2026miracleaug,
-  author  = {Zhu, Yutian},
-  title   = {{MiracleAug}},
-  year    = {2026},
-  date    = {2026-09-10},
-  version = {0.1.3},
-  url     = {https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3}
-}
-```
-
-可下载 [CITATION.bib](CITATION.bib)，或使用 GitHub 根据
-[CITATION.cff](CITATION.cff) 生成的 **Cite this repository** 入口。
-复现此版本时请检出 `v0.1.3` 标签。目前使用固定版本的 GitHub 地址作为标识，尚未分配 DOI。
-
 ## 工具与验证
 
-包内包含 episode 读取器、有限配额与证据记录工具、逐帧数据检查器、特定平台的
-无界面 EGL 支持和合成测试。实际机器人/任务适配器由执行模型实现；本 skill 不是
+包内包含 episode 读取器、有限配额与证据记录工具、逐帧数据检查器、通用正仿射
+单位适配工具、特定平台的无界面 EGL 支持和合成测试。实际机器人/任务适配器由执行
+模型实现；本 skill 不是
 适用于任意输入的预训练逆渲染或动作恢复模型。
 
-核心辅助工具仅依赖 Python 3.10+ 标准库，读取源数据的可选依赖见
-[requirements-source.txt](requirements-source.txt)。Blender 和原生数据集 SDK 按项目
-选择版本，并写入运行记录。
+台账／逐帧工具仅依赖 Python 3.10+ 标准库，源数据读取依赖见
+[requirements-source.txt](requirements-source.txt)。单位适配使用 PyTorch 和 safetensors，
+见 [requirements-deployment.txt](requirements-deployment.txt)，优先复用已固定的训练环境。
+Blender 和原生数据集 SDK 按项目选择版本，并写入运行记录。
 
 ```bash
 python -m unittest discover -s tests -v
@@ -107,8 +87,32 @@ python scripts/package_skill.py --output dist/MiracleAug-skill.zip
 
 测试覆盖配额、补足、恢复、不同状态/动作维度、多相机、时间/动作对齐和 LeRobot
 v2/v3 episode 定位。具体证据与未验证项见[验证范围](references/validation.md)。
-公开 CI 使用合成数据，不需要 GPU、私人数据或令牌。
+测试使用合成数据，不需要 GPU、私人数据或令牌；可选依赖存在时运行相应测试。
 
 本目录可直接作为独立 GitHub 仓库。分发包使用明确的文件白名单、相对链接检查和
 SHA-256 清单，只有审核过的展示图会随代码提供；不包含原视频、场景文件、缓存或凭据。
 MIT 许可覆盖原创代码和文档，第三方资产与展示结果的许可和署名单独记录。
+
+
+## 从示教到模型
+
+示例请求：
+
+> 使用 $miracleaug，根据这条示教和多视角照片重建场景，生成 100 条增广示教。
+> 机器人、相机和任务见数据。每条导出视频与 JSON；使用我的计算额度训练 ACT 与
+> SmolVLA，把数据和模型上传到我指定的仓库，并给出实机 rollout 命令。
+
+技能优先复用少量已验证的运动／布局种子，为它们派生多种相机、材质和光照，支持
+全桌布局、目标朝向、距离与干扰物删减。CPU 准备、GPU 渲染、原生导出、预览、
+本地训练与上传按依赖异步进行；监控显示实际分类进度、活动任务和各阶段 ETA。
+
+模型交付包含权重、配置、两端处理器、单位／零点假设、相机与控制频率契约、版本和
+验证记录。ACT 时间集成和 SmolVLA RTC 分开配置。可加载、离线可运行、真实闭环成功
+是不同结论：本次照片起步案例的实机 ACT 已能抓起并搬运，但释放尚未确认成功。
+详见[案例经验](references/case-lessons.md)、[训练部署](references/training-deployment.md)和
+[运行诊断](references/rollout-diagnostics.md)。不会把这一结果写成任意任务的成功保证。
+
+## 引用
+
+当前最近的固定标签为 v0.1.3；若研究使用的是该版本，请引用固定版本。`main` 包含其后
+的开发更新。参见 [CITATION.cff](CITATION.cff) 或 [CITATION.bib](CITATION.bib)。

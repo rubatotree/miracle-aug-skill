@@ -240,7 +240,8 @@ def seal(root: Path) -> dict[str, Any]:
         raise ValueError("Internal exact-count invariant failed")
     state.update(phase="complete", accepted_candidates=accepted)
     write_json(root / "state.json", state)
-    return {"complete": True, "accepted": len(accepted), "upload_verified": False}
+    return {"complete": True, "scope": "dataset_ledger", "accepted": len(accepted),
+            "upload_verified": False, "models_verified": False, "real_rollout_verified": False}
 
 
 def initialize(args: argparse.Namespace) -> None:
@@ -253,7 +254,12 @@ def initialize(args: argparse.Namespace) -> None:
     cycles = args.cycles if args.cycles is not None else (count + 2) // 5
     counts = allocate(count, dict.fromkeys(FAMILIES, 1))
     weak = allocate((count + 2) // 5, counts)
-    kind, source = next((kind, value) for kind, value in (("hf", args.hf_dataset), ("dataset", args.dataset), ("video", args.video)) if value)
+    kind, source = next((kind, value) for kind, value in (
+        ("hf", args.hf_dataset), ("dataset", args.dataset), ("video", args.video),
+        ("images", getattr(args, "images", None))) if value)
+    models = list(dict.fromkeys(getattr(args, "train_model", None) or []))
+    if models and not count:
+        raise ValueError("Training scope requires a positive dataset count")
     request = {"schema": "miracleaug_request_v1", "source": {"kind": kind, "location": source, "episode": args.episode},
                "task": args.task, "references": args.reference, "accepted_count": count, "authorized_limit": count,
                "seed": args.seed, "attempts_per_episode": 12,
@@ -261,14 +267,19 @@ def initialize(args: argparse.Namespace) -> None:
                "engines": {"CYCLES": {"count": cycles, "samples": 128, "weight": 1.0},
                            "BLENDER_EEVEE": {"count": count - cycles, "samples": 64, "weight": 1.0}},
                "privacy": {"redact_exterior": args.redact_exterior},
-               "preview": {"formats": ["png", "mp4"], "grid": [6, 6], "scales": [1, 2, 4]},
+               "preview": {"formats": ["png", "mp4"], "per_episode": True, "companion_json": True,
+                           "grid": None, "scales": [1]},
+               "training": {"enabled": bool(models), "models": models, "snapshot": None,
+                            "compute": None, "upload": {"enabled": False, "repositories": {}}},
+               "deployment": {"requested": bool(models), "hardware_contract": None,
+                              "physical_execution_authorized": False},
                "upload": {"enabled": False, "repo_id": None, "private": True}}
     if count:
         validate_request(request)
     write_json(root / "request.json", request)
     (root / "docs").mkdir(exist_ok=True)
     if not (root / "ROADMAP.md").exists():
-        (root / "ROADMAP.md").write_text("# MiracleAug project\n\nArchitecture: source contract → metric scene/task adapter → finite generation → native export/validation.\n\nMilestones: source inspection; calibrated editable scene checkpoint; task-aware augmentation; render smoke; exact accepted dataset; authorized upload/evaluation.\n\nRisks: partial observability, control semantics, contact feasibility, renderer differences, privacy, compute/storage.\n", encoding="utf-8")
+        (root / "ROADMAP.md").write_text("# MiracleAug project\n\nArchitecture: demonstration plus multiview evidence (or available fallback) → source/control contract → metric scene/task adapter → finite generation → native snapshot → requested training/deployment.\n\nMilestones: source inspection; editable scene; observable complete task seeds; augmentation/render smoke; exact accepted dataset; parallel local training and authorized upload; verified processors and rollout command when requested.\n\nRisks: partial observability, unit/zero and action semantics, contact feasibility, renderer differences, compute/storage and runtime latency. Dataset sealing does not complete model delivery or prove real rollout success.\n", encoding="utf-8")
     if not (root / "docs/dev_log.md").exists():
         (root / "docs/dev_log.md").write_text("# Execution evidence\n\nRequest initialized; reconstruction and generation have not yet been validated.\n", encoding="utf-8")
 
@@ -281,12 +292,15 @@ def main() -> None:
     sources.add_argument("--hf-dataset")
     sources.add_argument("--dataset")
     sources.add_argument("--video")
+    sources.add_argument("--images", help="Photo file/directory when no demonstration is available")
     parser.add_argument("--episode", type=int, default=0)
     parser.add_argument("--task", default="Inspect source task")
     parser.add_argument("--count", type=int, default=0)
     parser.add_argument("--cycles", type=int)
     parser.add_argument("--seed", type=int, default=2026)
     parser.add_argument("--reference", action="append", default=[])
+    parser.add_argument("--train-model", action="append", choices=("act", "smolvla"), default=[],
+                        help="Record requested training/deployment scope; does not launch jobs")
     parser.add_argument("--redact-exterior", action="store_true")
     parser.add_argument("--name", choices=tuple(CHECKS))
     parser.add_argument("--report")
@@ -295,7 +309,7 @@ def main() -> None:
     args.root = args.root.resolve()
     if args.episode < 0:
         parser.error("Episode must be nonnegative")
-    if args.command == "init" and not any((args.hf_dataset, args.dataset, args.video)):
+    if args.command == "init" and not any((args.hf_dataset, args.dataset, args.video, args.images)):
         parser.error("init requires a source")
     with ledger_lock(args.root):
         if args.command == "init":

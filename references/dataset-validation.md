@@ -41,22 +41,63 @@ padding and every decoded fixture pixel. Fixture data must be unmistakably marke
 and refused by production upload. Don't borrow private unredacted imagery for a
 public test fixture.
 
-Production validation must check exact accepted counts by family/intensity/engine,
-unique IDs, successful full task checks, complete videos and finite arrays, source
-lineage and privacy when required. Decode all videos to verify shape/count/PTS. Read
-representative frames at start/middle/end of *every* episode with the official reader
-and compare joint/action values, quality/weight fields and camera imagery against the
-generated masters. Exercise multi-step action windows at each boundary on fixtures.
+Production validation checks exact accepted counts by family/intensity/engine, unique
+IDs, complete artifacts, finite arrays, synchronized frame/time ranges, source lineage
+and declared task validation level. Vectorize inexpensive numeric checks across all rows.
+Reuse per-episode render/export receipts instead of decoding and simulating everything
+again during each merge. Exercise the official reader on representative episodes,
+engines, schema revisions and action boundaries, comparing camera images, state/action
+and annotation values against masters. Choose additional decode/review sampling from
+observed defects and the user's requirements; do not impose universal all-frame visual
+review or compression-error thresholds after the user has waived them. Preserve missing/
+corrupt-file, frame-count and temporal integrity checks as applicable.
+
+Full physical seeds and inherited kinematic/appearance derivatives must retain distinct
+labels. A success-labelled derivative needs a justified inheritance scope plus relevant
+candidate checks; do not describe it as freshly physics-validated. An actual failed task
+must not be promoted to success merely to satisfy a count.
 
 Verify actual render metadata agrees with labels: a low-sample preview cannot be
 exported as a final high-quality episode. Recompute per-episode and global statistics
-for generated signals, including extra features as required by the SDK. Check video
-compression effects separately from the exact numerical labels.
+for generated signals, including extra features as required by the SDK. Investigate video
+compression effects separately when quality is in question or explicitly requested. A
+fixed encoder plus known-good export receipts does not require repeated pixel-error QA
+on every long-tail sample.
 
 Write a checksummed generation manifest and dataset validation report after all
-files are finalized. Upload only if production, complete, exact-count, validated and
-privacy-released where required. Create a new destination or verify an existing
+files are finalized. Upload a complete validated production artifact for its declared scope, with
+privacy redaction only where requested. An authorized interim subset can be published
+before the full quota is done: bind whole episodes to an immutable subset snapshot and
+report its actual counts/distribution, not the final dataset quota claim. Create a new destination or verify an existing
 session marker before updating it; never overwrite the source. Honor requested
 private/public visibility at creation and verify again after upload. Save remote
 commit, inventory and size/hash evidence. Don't claim an upload from successful
 authentication or an uncommitted LFS preupload.
+
+
+## Native compatibility details that mattered in production
+
+Validate the actual installed writer/reader, not just a format sketch. Test image moment
+calculations using uint8 extrema: squaring uint8 can overflow and silently destroy RGB
+variance. Convert to an appropriate floating type before accumulation if a pinned SDK
+needs a localized patch, then record/test that patch. Do not patch current versions merely
+because an older version once needed it. Check dependency combinations in an isolated
+environment; a successfully imported NumPy/SDK pair may still fail on scalar columns.
+
+When aggregating shards, preserve code-to-name label dictionaries for family, strength,
+phase, renderer and quality. Refuse equal numeric IDs with conflicting meanings or
+silently reordered categories; allow later-added categories when compatible. Keep each
+shard's label provenance and validate actual numeric code ranges. Statistics must describe
+the exact selected snapshot, not an earlier/interim or later/full dataset.
+
+Export two observations of the same time as separate native camera streams. Review
+mosaics are not replacement training inputs. A requested preview directory should contain
+one synchronized MP4 and same-stem JSON per episode, plus an index. Include episode and
+candidate IDs, task, source/seed, cameras/order, duration/FPS, engine and real quality,
+augmentation parameters, validation scope, units and file hashes. Reuse encoded native
+streams or source frames on CPU; do not render again merely to produce inspection videos.
+
+For a gallery with fewer unique examples than requested cells, retain the true count:
+use an empty labelled cell or visibly label a repeated example with its source. Preserve
+paired-view time and identity across layouts. Excluding an occluded sample from a gallery
+does not repair it in the dataset; keep that distinction in the dataset issue record.

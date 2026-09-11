@@ -45,8 +45,8 @@ parallax under new cameras. Build a continuous plausible background/room volume 
 constrain the camera envelope; annotate which geometry is inferred. Distant environment
 proxies may be acceptable if they pass the requested view envelope and privacy rules.
 
-For alternate toys, prefer a complete licensed toy model over ornamenting an ill-shaped
-blob. Inspect rest/grasp/release closeups. Scale a whole coherent design, preserve its
+For alternate toys, use a coherent modeled or licensed asset rather than ornamenting
+an ill-shaped blob. Inspect rest/grasp/release closeups. Scale a whole coherent design, preserve its
 recognizable face and appendages, clean topology and align a metric grasp anchor.
 Check license/attribution at the asset source. Paid generation is optional and subject
 to existing spending authorization, never required merely because a service exists.
@@ -82,3 +82,52 @@ Save `scene.blend`, regeneration scripts and `scene_checkpoint.json` only after:
 List evidence files and hashes, residual metrics and limitations. A failed property
 must remain failed. For scene-only scope, deliver here. For authorized augmentation,
 continue from this immutable checkpoint. Never call an unseen region measured truth.
+
+## Photo-only reconstruction and appearance corrections
+
+Use metric robot parts and multiview table/rigid-object constraints to estimate scale.
+Phone focal length equivalents, source crop and output aspect ratio are different;
+resolve intrinsics for the actual content rectangle without stretching the photograph.
+Fit shared rigid landmarks before flexible plush surfaces. A low residual on cup rims
+alone does not certify the entire scene or a second camera. A view supplied later may
+show a different object pose; do not force inconsistent captures into one rigid fit.
+
+Create a semantic inventory before detailing: identity, silhouette, orientation, material,
+markings and evidence views. The second case's white object was a chef seal, not an
+unspecified white blob. User corrections update that inventory and the builder. Complete
+coherent geometry can come from direct modeling, procedural construction or a licensed
+asset; choose from source fidelity, editability and time. An earlier project's preference
+for downloaded toys is not a reason to override a user requesting direct reconstruction.
+Paid/image-to-3D proposals need lineage and rejection tracking; reuse completed downloads
+and never resubmit merely because the agent forgot the prior result.
+
+When a scene looks plastic, separate geometry, albedo, roughness, normals/fiber structure,
+lighting and camera response. Compare one factor at a time under fixed views/light.
+Large tabletop, floor, walls, bedding and large toys dominate perceived realism: give
+them plausible nonuniformity at physical scale, not only flat Principled colors. For
+fabric include seams, stitch placement, directional/grazing response and surface fibers
+where their pixel footprint matters. Put fine detail into appropriate geometry/normal/
+roughness channels; avoid regular sine folds or uniform hair lengths that reveal CG.
+
+Reference-derived textures should use clean patches, perspective rectification and
+illumination removal where possible. Record that recovered albedo/roughness is inferred,
+not a measured BRDF. Preserve macro color and face cues. Black cloth washed gray by
+specular response should not be repaired only by darkening the entire room. Different
+brightness on horizontal and vertical fabric can come from grazing sheen; compare a
+material hypothesis before an endless sequence of light changes.
+
+For a cylindrical printed mug, verify artwork shape, alpha, scale, vertical placement,
+wrap angle and relation to the handle in the main failing view and other supplied views.
+A correct logo file can still be placed incorrectly. Use an authoritative logo source
+when needed, record its origin, then fit the actual product print; a current event logo
+may differ from the mug's printed year. Keep it a surface print, not thick embossed wire.
+After acceptance, use one shared asset ID/hash and application function across canonical
+scene, cached seeds and production. Validate that asset selection, so an old cached
+blend cannot silently restore the rejected decal.
+
+Keep collision, deformation and render meshes separate but mapped. New target geometry
+invalidates its old contact volume and grasp checks. Do not extend that invalidation to
+unrelated physics merely because a background texture changed. For dense fur, measure
+native Blender curves versus legacy bevel objects; preserve coordinates, radii, masks,
+material and deformation while changing representation. Test both final engines: a
+faster representation may still create Eevee sparkle or disappear through refraction.

@@ -1,13 +1,16 @@
-name: Contract tools
+name: Skill contracts
 on: [push, pull_request]
 jobs:
-  portable-tests:
+  synthetic-contracts:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: python -m pip install pyarrow cffconvert==2.0.0
+      - run: python -m pip install -r requirements-source.txt cffconvert==2.0.0
+      - run: python -m pip install torch --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m pip install safetensors
       - run: cffconvert --validate
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/package_skill.py --output dist/MiracleAug-skill.zip

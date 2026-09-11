@@ -1,20 +1,23 @@
 # MiracleAug
 
-**One demonstration. Diverse conditions. Task-consistent augmentation.**
+Demonstration and multiview references → reconstructed scene → augmented data → rollout policy.
 
 English · [简体中文](README.zh-CN.md)
 
-MiracleAug is an agent skill for turning a single robot demonstration into an editable
-Blender reconstruction and augmented demonstrations with synchronized robot trajectories.
+MiracleAug is an agent skill for turning a robot demonstration and multiview references
+into an editable Blender scene, augmented demonstrations and, when requested, trained
+LeRobot policies with verified deployment units, processors and rollout commands.
 It is designed for GPT-6 Astra or a model with equivalent or stronger visual, spatial
 and coding capabilities.
 
-Start with a video, a local robot dataset, or a Hugging Face dataset and episode index.
-Multiview video, images and text references are optional. The agent first saves a
-reviewable scene checkpoint, then generates the requested number of task-valid samples,
-validates the native dataset, and prepares or performs the authorized upload.
+The preferred input is a demonstration video or dataset episode plus multiview photos.
+Missing photos, joint logs or demonstration video are supported: the agent proceeds
+with available evidence, estimating or synthesizing missing quantities explicitly.
+It saves a scene checkpoint, constructs complete task seeds, generates the requested
+data, and continues through authorized local training and model publication. Training
+and upload can run concurrently from one frozen local snapshot.
 
-## Results from the reconstructed scene
+## Historical demonstration-based showcase
 
 ![MiracleAug reconstructed scene, reverse view, glass, alternate toy, colored lighting and metal material](assets/showcase/overview.jpg)
 
@@ -53,8 +56,12 @@ complete dataset upload and improved policy generalization are not claimed here.
   variations, with replanning when a change affects task contact or reachability.
 - Exact accepted quotas, seeded candidates, same-category replacements, immutable
   checkpoints and resumable server execution.
-- Native dataset validation, joint trajectories, action semantics, camera/object
-  transforms, renderer labels, source lineage and explicit limitations.
+- Native dataset validation, synchronized inspection videos and JSON, control semantics,
+  renderer labels, seed lineage and explicit limitations.
+- Reusable motion/layout seeds, mixed observation variants, asynchronous preparation,
+  rendering, export, training and verified uploads with persistent progress.
+- ACT/SmolVLA training, both saved processors, explicit hardware units, sequential
+  runtime checks and model-specific rollout diagnostics.
 
 Unobserved surfaces remain labelled as inferred. When input contains video but no
 joint/control data, estimated motion is identified as inferred or synthesized;
@@ -74,48 +81,37 @@ git clone https://github.com/rubatotree/miracle-aug-skill.git ~/.codex/skills/mi
 Example request:
 
 > Use $miracleaug to reconstruct episode 3 of the Hugging Face dataset owner/demo.
-> Use this orbit video as an optional geometry reference. Save a Blender scene
+> Use the supplied multiview photos as geometry/appearance references. Save a Blender scene
 > checkpoint, then generate 100 accepted demonstrations on my Ubuntu GPU server:
 > 20 Cycles and 80 Eevee. Emphasize strong lighting, material and camera variations.
-> Export LeRobot data and joint trajectories, then upload to my specified private repo.
+> Export LeRobot data, per-episode videos and JSON. Train ACT and SmolVLA on the local
+> data, and publish data/models to my specified repositories. Include rollout commands
+> for my robot and cameras; use at most the GPU allowance specified for this project.
 
-A single `demo.mp4`, with or without extra references, is also a valid starting point.
+A single `demo.mp4`, a dataset episode, or only photos plus a task can also start the
+workflow. Photo-only task motion is synthetic, never reported as recorded ground truth.
 You can request reconstruction only. To redact a scene, add an explicit instruction
 such as “pixelate the exterior before rendering or sharing.” Otherwise no redaction
 is performed. The agent inspects available metadata before asking for missing inputs.
 
 ## Citation
 
-If you use MiracleAug in your research, please cite the version you used. The fixed
-release below is **v0.1.3**, published on September 10, 2026:
-
-> Zhu, Y. (2026). *MiracleAug* (Version 0.1.3) [Computer software]. GitHub.
-> https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3
-
-```bibtex
-@software{zhu2026miracleaug,
-  author  = {Zhu, Yutian},
-  title   = {{MiracleAug}},
-  year    = {2026},
-  date    = {2026-09-10},
-  version = {0.1.3},
-  url     = {https://github.com/rubatotree/miracle-aug-skill/tree/v0.1.3}
-}
-```
-
-Download [CITATION.bib](CITATION.bib), or use GitHub's **Cite this repository** entry
-generated from [CITATION.cff](CITATION.cff). To reproduce this release, check out the
-`v0.1.3` tag. Its identifier is the versioned GitHub URL; no DOI has been assigned.
+The most recent tagged release is v0.1.3. Cite that fixed version when it is the
+version used in research; `main` contains subsequent development updates.
+See [CITATION.cff](CITATION.cff) or [CITATION.bib](CITATION.bib).
 
 ## Tools and verification
 
 The package includes a selected-episode reader, a finite quota/evidence ledger, a
-frame-contract validator, platform-specific headless EGL support, and synthetic tests.
+frame-contract validator, a positive-affine policy-unit adapter, platform-specific
+headless EGL support, and synthetic tests.
 The agent implements the actual robot/task adapter; this is not a pretrained universal
 inverse-rendering or action-recovery model.
 
-Core helpers use Python 3.10+ and its standard library. Optional source-reader
-dependencies are listed in [requirements-source.txt](requirements-source.txt).
+The source/ledger/frame helpers use Python 3.10+ with optional source dependencies in
+[requirements-source.txt](requirements-source.txt). Unit adaptation uses PyTorch and
+safetensors; see [requirements-deployment.txt](requirements-deployment.txt) and reuse
+the pinned training environment.
 Blender and the native dataset SDK are selected and recorded for each generated project.
 
 ```bash
@@ -126,7 +122,10 @@ python scripts/package_skill.py --output dist/MiracleAug-skill.zip
 Tests cover quota/refill/resume behavior, variable state/action dimensions, multiple
 cameras, timestamp/action alignment and LeRobot v2/v3 episode resolution. See
 [validation scope](references/validation.md) for the evidence and remaining limitations.
-Public CI uses synthetic fixtures and needs no GPU, private data or access token.
+Synthetic tests need no GPU, private data or access token. Optional integration tests
+run when their dependencies are installed. A deployment artifact is not proof of real
+task success; the photo-driven case reached real grasp/transport but release remained
+unresolved at this update. See [case lessons](references/case-lessons.md).
 
 This directory can serve as a standalone GitHub repository. Releases use an explicit
 file allowlist, checked local links and SHA-256 manifests; only reviewed showcase
